@@ -1,0 +1,67 @@
+.advert {
+  border-bottom-width: 1px;
+  cursor: pointer;
+  display: flex;
+  padding: 20px 30px 0 30px;
+  transition: background-color 0.2s;
+}
+
+.advert:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.advert-header {
+  color: rgb(101, 119, 134);
+  margin-bottom: 2px;
+}
+
+.advert-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  max-width: 425px;
+}
+
+.advert-name {
+  color: rgb(20, 23, 26);
+  font-weight: bold;
+}
+
+.advert-username {
+  margin-left: 5px;
+}
+
+.advert-separator {
+  padding: 0 5px;
+}
+
+.advert-span {
+  font-weight: bold;
+  color: rgb(2, 63, 2)
+}
+
+.filters {
+  padding: 2%;
+}
+
+.filters > label {
+  padding-right: 2%;
+}
+
+.filter-select {
+  border: none;
+  font-size: 14px;
+  height: auto;
+  background-color: #9dcfa7;
+  color: rgb(20, 23, 26);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+  padding: 2px;
+}
+
+.advert-header > h2 {
+  color: rgb(2, 63, 2)
+}
+
+.button-delete {
+  margin-left: 5%;
+}
