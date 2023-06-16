@@ -14,10 +14,11 @@ export const getAdvert = advertId => {
 
 export const createAdvert = formData => {
   const url = advertsUrl;
+  console.log(formData);
   return client.post(url, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
-  },
+    },
   });
 };
 

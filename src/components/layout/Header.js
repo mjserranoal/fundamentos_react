@@ -1,16 +1,20 @@
 import Button from '../shared/Button';
 
-import logo, { ReactComponent as Icon } from '../../assets/logoN.svg';
+import { ReactComponent as Icon } from '../../assets/logoN.svg';
 import { logout } from '../auth/service';
 import classNames from 'classnames';
 import ConfirmationButton from '../shared/ConfirmationButton';
 
 import './Header.css';
 import { Link, NavLink } from 'react-router-dom';
-import { useAuth } from '../auth/context';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIsLogged } from '../../store/selectors';
+import { authLogout } from '../../store/actions';
 
 const Header = ({ className }) => {
-  const { isLogged, onLogout } = useAuth();
+  const isLogged = useSelector(getIsLogged);
+  const dispatch = useDispatch();
+  const onLogout = () => dispatch(authLogout());
 
   const handleLogoutClick = async () => {
     await logout();
@@ -25,10 +29,7 @@ const Header = ({ className }) => {
         </div>
       </Link>
       <nav className="header-nav">
-        <NavLink
-          to="/adverts/new"
-          className="header-nav-item"
-        >
+        <NavLink to="/adverts/new" className="header-nav-item">
           New Advert
         </NavLink>{' '}
         <NavLink to="/adverts" className="header-nav-item" end>
@@ -36,10 +37,13 @@ const Header = ({ className }) => {
         </NavLink>
         {isLogged ? (
           <ConfirmationButton
-          confirmation="Are you sure?"
-          onConfirm={handleLogoutClick}
-          disabled={!isLogged}
-        > Logout </ConfirmationButton>
+            confirmation="Are you sure?"
+            onConfirm={handleLogoutClick}
+            disabled={!isLogged}
+          >
+            {' '}
+            Logout{' '}
+          </ConfirmationButton>
         ) : (
           <Button
             as={Link}

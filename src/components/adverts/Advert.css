@@ -37,7 +37,7 @@
 
 .advert-span {
   font-weight: bold;
-  color: rgb(2, 63, 2)
+  color: rgb(2, 63, 2);
 }
 
 .filters {
@@ -59,7 +59,16 @@
 }
 
 .advert-header > h2 {
-  color: rgb(2, 63, 2)
+  color: rgb(2, 63, 2);
+}
+
+.advertPage-error {
+  background-color: rgb(224, 36, 94, 0.1);
+  border: 1px solid rgba(224, 36, 94, 0.2);
+  border-radius: 5px;
+  color: rgb(224, 36, 94);
+  margin-top: 20px;
+  padding: 10px 15px;
 }
 
 .button-delete {

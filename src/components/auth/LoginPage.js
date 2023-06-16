@@ -2,21 +2,15 @@ import { useState } from 'react';
 
 import Button from '../shared/Button';
 import FormField from '../shared/FormField';
-import { login } from './service';
 
 import './LoginPage.css';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from './context';
+import { useDispatch, useSelector } from 'react-redux';
+import { authLogin, uiResetError } from '../../store/actions';
+import { getUi } from '../../store/selectors';
 
 function LoginPage() {
-  const { onLogin } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector(getUi);
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -24,30 +18,15 @@ function LoginPage() {
   });
 
   const resetError = () => {
-    setError(null);
+    dispatch(uiResetError());
   };
 
   const handleSubmit = async event => {
     event.preventDefault();
-
-    resetError();
-    setIsLoading(true);
-    try {
-      await login(credentials);
-      setIsLoading(false);
-      // Logged in
-      onLogin();
-      // Redirect to pathname
-      const to = location.state?.from?.pathname || '/';
-      navigate(to);
-    } catch (error) {
-      setError(error);
-      setIsLoading(false);
-    }
+    dispatch(authLogin(credentials));
   };
 
   const handleChange = event => {
-
     let valor = event.target.value;
 
     if (event.target.name === 'remember') {

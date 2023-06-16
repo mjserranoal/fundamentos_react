@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# practica react avanzado con redux realizada por MJose Serrano
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
