@@ -3,14 +3,13 @@ import classNames from 'classnames';
 import defaultPhoto from '../../assets/default-profile.png';
 import './Photo.css';
 
-const Photo = ({ photo }) => {
-  return (
-    <img
-      className={classNames('photo', 'advert-photo')}
-      src={photo ? photo : defaultPhoto}
-      alt=""
-    />
-  );
-};
+const Photo = ({ className, src, ...props }) => (
+  <img
+    className={classNames('photo', className)}
+    src={src ? src :defaultPhoto}
+    alt=""
+    {...props}
+  />
+);
 
 export default Photo;

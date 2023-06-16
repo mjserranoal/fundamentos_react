@@ -1,31 +1,42 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Layout from '../layout/Layout';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { getAdvert } from './service';
 import Photo from '../shared/Photo';
 import ConfirmationButton from '../shared/ConfirmationButton';
+import { deleteAdvert } from './service';
 import Advert from './Advert';
-import { useDispatch, useSelector } from 'react-redux';
-import { advertDelete, advertLoad, uiResetError } from '../../store/actions';
-import { getAdvert, getUi } from '../../store/selectors';
 
 const AdvertPage = () => {
-  const dispatch = useDispatch();
-  const { advertId } = useParams();
-  const advert = useSelector(getAdvert(advertId));
-  const { isLoading, error } = useSelector(getUi);
+  const params = useParams();
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const [advert, setAdvert] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
-    dispatch(advertLoad(advertId));
-  }, [dispatch, advertId]);
+    setIsLoading(true);
+    getAdvert(params.advertId)
+      .then(advert => setAdvert(advert))
+      .catch(error => {
+        if (error.status === 404) {
+          return navigate('/404');
+        }
+        setError(error);
+      });
+    setIsLoading(false);
+  }, [params.advertId, navigate]);
 
-  const resetError = () => {
-    dispatch(uiResetError());
-  };
+  if (error?.status === 404) {
+    return <Navigate to="/404" />;
+  }
 
   const handleDelete = async event => {
-    dispatch(advertDelete(advertId));
+    await deleteAdvert(advert.id);
+      navigate('/');
   };
-
+  
   return (
     <Layout title="Advert detail">
       {isLoading ? (
@@ -33,11 +44,11 @@ const AdvertPage = () => {
       ) : (
         <article className="advert bordered">
           <div className="left">
-            <Photo {...advert} />
+            <Photo className="advert-photo" src={advert.photo}/>
           </div>
           <div className="right">
             <Advert {...advert} />
-
+          
             <ConfirmationButton
               confirmation="Are you sure?"
               onConfirm={handleDelete}
@@ -47,11 +58,6 @@ const AdvertPage = () => {
               Delete
             </ConfirmationButton>
           </div>
-          {error && (
-            <div onClick={resetError} className="advertPage-error">
-              {error.message}
-            </div>
-          )}
         </article>
       )}
     </Layout>
